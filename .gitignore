@@ -1,0 +1,27 @@
+# Build outputs
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+/bin/
+/dist/
+/build/
+
+# Debug files
+__debug_bin*
+debug
+debug.test
+
+# Test / coverage
+coverage.out
+*.cover
+*.prof
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
