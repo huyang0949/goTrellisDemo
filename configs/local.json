@@ -1,0 +1,14 @@
+{
+  "mongodbUrl": "mongodb://10.0.0.10:27017/cook-king-server-dev",
+  "redis": {
+    "mode": "redis",
+    "cluster": false,
+    "port": 6579,
+    "host": "10.0.0.10",
+    "defaultCfg": {
+      "redis": {
+        "ttl": 300
+      }
+    }
+  }
+}

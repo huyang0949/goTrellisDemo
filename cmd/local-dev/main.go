@@ -1,11 +1,13 @@
 package main
 
 import (
+	"context"
 	"log"
 
 	appgreeter "goTrellisDemo/internal/app/greeter"
 	appuser "goTrellisDemo/internal/app/user"
 	microinfra "goTrellisDemo/internal/infra/micro"
+	"goTrellisDemo/internal/infra/resources"
 	grpcgreeter "goTrellisDemo/internal/transport/grpc/greeter"
 	grpcuser "goTrellisDemo/internal/transport/grpc/user"
 	httptransport "goTrellisDemo/internal/transport/http"
@@ -14,6 +16,17 @@ import (
 )
 
 func main() {
+	ctx := context.Background()
+	res, err := resources.New(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer func() {
+		if err := res.Close(ctx); err != nil {
+			log.Printf("close resources: %v", err)
+		}
+	}()
+
 	backendService := microinfra.NewService(
 		"local-backend",
 		micro.Address(":8080"),
