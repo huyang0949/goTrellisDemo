@@ -10,16 +10,12 @@ import (
 )
 
 type UserHandler struct {
-	client      client.Client
-	serviceName string
-	addresses   []string
+	rpc rpcHandler
 }
 
 func NewUserHandler(client client.Client, serviceName string, addresses ...string) *UserHandler {
 	return &UserHandler{
-		client:      client,
-		serviceName: serviceName,
-		addresses:   addresses,
+		rpc: newRPCHandler(client, serviceName, addresses...),
 	}
 }
 
@@ -30,23 +26,6 @@ func (h *UserHandler) Login(c *gin.Context) {
 		return
 	}
 
-	req := h.client.NewRequest(
-		h.serviceName,
-		"User.Login",
-		&loginReq,
-		client.WithContentType("application/json"),
-	)
-
 	rsp := new(appuser.LoginResponse)
-	callOptions := make([]client.CallOption, 0, 1)
-	if len(h.addresses) > 0 {
-		callOptions = append(callOptions, client.WithAddress(h.addresses...))
-	}
-
-	if err := h.client.Call(c.Request.Context(), req, rsp, callOptions...); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusOK, rsp)
+	h.rpc.call(c, "User.Login", &loginReq, rsp)
 }
