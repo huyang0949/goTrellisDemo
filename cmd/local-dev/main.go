@@ -34,7 +34,7 @@ func main() {
 	if err := grpcgreeter.Register(backendService.Server(), appgreeter.NewService()); err != nil {
 		log.Fatal(err)
 	}
-	if err := grpcuser.Register(backendService.Server(), appuser.NewService()); err != nil {
+	if err := grpcuser.Register(backendService.Server(), appuser.NewService(res.Mongo.Database)); err != nil {
 		log.Fatal(err)
 	}
 

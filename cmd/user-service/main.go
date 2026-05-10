@@ -29,7 +29,7 @@ func main() {
 		micro.Address(":8082"),
 	)
 
-	if err := grpcuser.Register(service.Server(), appuser.NewService()); err != nil {
+	if err := grpcuser.Register(service.Server(), appuser.NewService(res.Mongo.Database)); err != nil {
 		log.Fatal(err)
 	}
 

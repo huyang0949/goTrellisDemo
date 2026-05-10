@@ -1,9 +1,10 @@
 {
-  "mongodbUrl": "mongodb://10.0.0.10:27017/cook-king-server-dev",
+  "mongodbUrl": "mongodb://10.0.0.10:27017/goTrellisDemo",
   "redis": {
     "mode": "redis",
     "cluster": false,
     "port": 6579,
+    "db":2,
     "host": "10.0.0.10",
     "defaultCfg": {
       "redis": {
